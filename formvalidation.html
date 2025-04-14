@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef2f3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .form-container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin: 0 0 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #4CAF50;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Register</h2>
+    <form id="myForm" onsubmit="return validateForm()">
+      <input type="text" id="name" placeholder="Full Name" />
+      <div class="error" id="nameError"></div>
+
+      <input type="email" id="email" placeholder="Email" />
+      <div class="error" id="emailError"></div>
+
+      <input type="password" id="password" placeholder="Password" />
+      <div class="error" id="passwordError"></div>
+
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" />
+      <div class="error" id="confirmPasswordError"></div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    function validateForm() {
+      // Clear previous errors
+      document.getElementById('nameError').innerText = '';
+      document.getElementById('emailError').innerText = '';
+      document.getElementById('passwordError').innerText = '';
+      document.getElementById('confirmPasswordError').innerText = '';
+
+      let name = document.getElementById('name').value.trim();
+      let email = document.getElementById('email').value.trim();
+      let password = document.getElementById('password').value;
+      let confirmPassword = document.getElementById('confirmPassword').value;
+
+      let isValid = true;
+
+      if (name === '') {
+        document.getElementById('nameError').innerText = 'Name is required.';
+        isValid = false;
+      }
+
+      if (email === '') {
+        document.getElementById('emailError').innerText = 'Email is required.';
+        isValid = false;
+      } else if (!/\S+@\S+\.\S+/.test(email)) {
+        document.getElementById('emailError').innerText = 'Email format is invalid.';
+        isValid = false;
+      }
+
+      if (password.length < 6) {
+        document.getElementById('passwordError').innerText = 'Password must be at least 6 characters.';
+        isValid = false;
+      }
+
+      if (confirmPassword !== password) {
+        document.getElementById('confirmPasswordError').innerText = 'Passwords do not match.';
+        isValid = false;
+      }
+
+      return isValid;
+    }
+  </script>
+
+</body>
+</html>
